@@ -1,0 +1,26 @@
+#game-holder {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  background: rgb(3, 69, 0);
+  width: 100vw;
+  height: 80vh;
+  border: solid 10px rgb(255, 255, 255);
+}
+
+.player-half {
+  display: flex;
+  flex-direction: column;
+  padding: 10vh 0;
+  justify-content: space-between;
+  align-items: center;
+  width: 50vw;
+}
+
+#player-one {
+  border-right: solid 5px rgb(255, 255, 255);
+}
+
+#player-two {
+  border-left: solid 5px rgb(255, 255, 255); 
+}

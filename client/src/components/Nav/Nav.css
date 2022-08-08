@@ -1,0 +1,13 @@
+#nav-holder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height:20vh;
+  width: 100vw;
+  text-align: center;
+  background: rgb(223, 255, 212);
+}
+
+.nav-div {
+  width: 100%;
+}
