@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import './App.css';
-import Nav from '../Nav/Nav'
 import Game from '../Game/Game'
 
 function App() {
 
   const [play, setPlay] = useState(false)
+  const [status, setStatus] = useState("Started")
+  const [winner, setWinner] = useState(null)
 
   return (
     <div className="App">
-      <Nav 
-        play={play}
-        setPlay={setPlay}
+      <Game 
+        winner={winner}
+        setWinner={setWinner}
+        status={status}
+        setStatus={setStatus}
       />
-      <Game />
     </div>
   );
 }
