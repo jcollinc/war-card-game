@@ -3,6 +3,7 @@
   flex-direction: row;
   box-sizing: border-box;
   background: rgb(3, 69, 0);
+  color: white;
   width: 100vw;
   height: 80vh;
   border: solid 10px rgb(255, 255, 255);
@@ -23,4 +24,8 @@
 
 #player-two {
   border-left: solid 5px rgb(255, 255, 255); 
+}
+
+.player-card {
+  font-size: 35vh;
 }

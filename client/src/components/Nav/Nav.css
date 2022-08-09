@@ -1,13 +1,25 @@
 #nav-holder {
   display: flex;
   flex-direction: row;
+  color: rgb(0, 79, 0);
   justify-content: space-between;
   height:20vh;
   width: 100vw;
   text-align: center;
+  align-items: center;
   background: rgb(223, 255, 212);
 }
 
 .nav-div {
   width: 100%;
+}
+
+.nav-div#nav-div-2 {
+  width: 150%;
+}
+
+.nav-button {
+  margin: 0 10px;
+  width: 60px;
+  height: 30px;
 }
