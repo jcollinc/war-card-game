@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './Nav.css'
 
-function Nav({ setStatus, status, setPlay, winner}) {
+function Nav({ setStatus, status, winner, newGame}) {
 
   const [banner, setBanner] = useState("W A R")
   const [button, setButton] = useState("Pause")
@@ -9,6 +9,7 @@ function Nav({ setStatus, status, setPlay, winner}) {
   useEffect (() => {
     if (status === "New Game") {
       setBanner("Press start to begin game.")
+      setButton("Start")
     }
     else if (status === "Started") {
       setBanner("W A R")
@@ -16,16 +17,18 @@ function Nav({ setStatus, status, setPlay, winner}) {
     else if (status === "Paused") {
       setBanner("Game paused.")
     }
-    else if (status === "Game Over") {
+    else if (status === "Game Over" && winner) {
       setBanner (`${winner.name} wins! Press start to play again.`)
+      setButton("Start")
     }
-  }, [])
+  }, [status, winner])
 
   function buttonText () {
     if (status === "New Game") {
       setStatus("Started")
       setBanner("W A R")
       setButton("Pause")
+      newGame()
     }
     else if (status === "Started") {
       setStatus("Paused")
@@ -41,6 +44,7 @@ function Nav({ setStatus, status, setPlay, winner}) {
       setStatus("Started")
       setBanner("W A R")
       setButton("Start")
+      newGame()
     }
   }
   

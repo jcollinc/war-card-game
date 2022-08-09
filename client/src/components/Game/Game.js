@@ -44,7 +44,7 @@ function Game({ setStatus, status, winner, setWinner }) {
 
   function newGame() {
     shuffle(deck)
-    toPlay1 = (deck.slice(0,26))
+    toPlay1 = (deck.slice(0,2))
     toPlay2 = (deck.slice(26))
     setLeft(toPlay1.shift())
     setRight(toPlay2.shift())
@@ -86,7 +86,7 @@ function Game({ setStatus, status, winner, setWinner }) {
     if ((hand1.length === 0 || hand2.length === 0)) {
       setGameOver(true)
       setWinner(!hand1.length ? players[1] : players[0])
-      endGame(winner)
+      endGame(!hand1.length ? players[1] : players[0])
       return
     }
     pot = []
@@ -112,6 +112,7 @@ function Game({ setStatus, status, winner, setWinner }) {
     }
     else if (left[1] === right[1]) {
       setWar(true)
+      return
     }
     if (!toPlay1.length || !toPlay2.length) {
       newStatus = "Game Over"
@@ -167,8 +168,8 @@ function Game({ setStatus, status, winner, setWinner }) {
     }}
   }
 
-  function endGame() {
-    console.log(`${winner.name} wins!`)
+  function endGame(winner) {
+    setStatus("Game Over")
   }
 
   // function endGame (winner) {
@@ -192,6 +193,7 @@ function Game({ setStatus, status, winner, setWinner }) {
       setStatus={setStatus}
       winner={winner}
       status={status}
+      newGame={newGame}
     />
     <div id="game-holder">
       <div id="player-one" className="player-half">
