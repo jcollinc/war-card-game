@@ -19,10 +19,14 @@
 }
 
 #player-one {
+  text-align: right;
+  padding-left: 400px;
   border-right: solid 5px rgb(255, 255, 255);
 }
 
 #player-two {
+  text-align: left;
+  padding-right: 400px;
   border-left: solid 5px rgb(255, 255, 255); 
 }
 
