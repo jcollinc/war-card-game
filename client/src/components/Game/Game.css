@@ -10,17 +10,11 @@
 }
 
 div#player-one.player-half {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-  padding-right: 50px;
+
 }
 
 div#player-two.player-half {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  padding-left: 50px;
+
 }
 
 .player-half {
@@ -28,7 +22,7 @@ div#player-two.player-half {
   flex-direction: column;
   padding: 10vh 0;
   justify-content: space-between;
-  align-items: left;
+  align-items: center;
   width: 50vw;
 }
 
@@ -41,5 +35,5 @@ div#player-two.player-half {
 }
 
 .player-card {
-  font-size: 25vh;
+  font-size: 35vh;
 }

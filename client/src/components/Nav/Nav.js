@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './Nav.css'
 
-function Nav({ setStatus, status, winner, newGame, timer, setTimer, progressGame}) {
+function Nav({ setStatus, status, winner, newGame, setTimer, timer, progressGame, showStats, setShowStats, nextRound}) {
 
   const [banner, setBanner] = useState("W A R")
   const [button, setButton] = useState("Pause")
@@ -54,19 +54,42 @@ function Nav({ setStatus, status, winner, newGame, timer, setTimer, progressGame
       progressGame()
     }
   }
+
+  function setTimer1x() {
+    clearInterval(timer)
+    setTimer(setInterval(nextRound, 1000))
+  }
+
+  function setTimer2x() {
+    clearInterval(timer)
+    setTimer(setInterval(nextRound, 600))
+  }
+
+  function setTimer3x() {
+    clearInterval(timer)
+    setTimer(setInterval(nextRound, 300))
+  }
+
+  function openInNewTab (url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
   
 
   return (
     <div id="nav-holder">
       <div className="nav-div" id="nav-div-1">
-        <button onClick={buttonText} className="nav-button">{button}</button>
-        <button className="nav-button">Stats</button>
-        <button className="nav-button">Rules</button>
+        <button title="toggle auto-play" onClick={buttonText} className="nav-button">{button}</button>
+        <button title="toggle stats" onClick={() => setShowStats(!showStats)} className="nav-button">Stats</button>
+        <button onClick={() => openInNewTab('https://bicyclecards.com/how-to-play/war/')} title="open rules (in new tab)" className="nav-button">Rules</button>
       </div>
       <div className="nav-div" id="nav-div-2">
         <h1>{banner}</h1>
       </div>
-      <div className="nav-div" id="nav-div-3">Three</div>
+      <div className="nav-div" id="nav-div-3">
+        <button onClick={setTimer1x} title="set game speed to 1x" className="nav-button">1x</button>
+        <button onClick={setTimer2x} title="set game speed to 2x" className="nav-button">2x</button>
+        <button onClick={setTimer3x} title="set game speed to 3x" className="nav-button">3x</button>
+      </div>
     </div>
   )
 }

@@ -14,6 +14,7 @@ function Game({ setStatus, status, winner, setWinner }) {
   const [winnings, setWinnings] = useState([])
   const [players, setPlayers] = useState([])
   const [timer, setTimer] = useState()
+  const [showStats, setShowStats] = useState(false)
 
   const [deck, setDeck] = useState([
     ["🂢",2],["🂣",3],["🂤",4],["🂥",5],["🂦",6],["🂧",7],["🂨",8],["🂩",9],["🂪",10],["🂫",11],["🂭",12],["🂮",13],["🂡",14],
@@ -45,7 +46,7 @@ function Game({ setStatus, status, winner, setWinner }) {
       setPlayers(allPlayers)
     })
     shuffle(deck)
-    toPlay1 = (deck.slice(0,2))
+    toPlay1 = (deck.slice(0,26))
     toPlay2 = (deck.slice(26))
     setLeft(null)
     setRight(null)
@@ -198,17 +199,21 @@ function Game({ setStatus, status, winner, setWinner }) {
       status={status}
       newGame={newGame}
       timer={timer}
+      nextRound={nextRound}
+      setTimer={setTimer}
+      showStats={showStats}
+      setShowStats={setShowStats}
       progressGame = {progressGame}
     />
     <div id="game-holder">
       <div id="player-one" className="player-half">
-        <div className="player-name"><h2>Player 1</h2></div>
-        {!left ? null : <div className="player-card">{war ? `${winnings[0][0]} 🂠 ${left[0]}` : left[0]}</div>}
+        <div className="player-name"><h2>Player 1 {showStats ? `has ${players[0].games_won} win${players[0].games_won === 1 ? "" : "s"}` : null}</h2></div>
+        {!left ? null : <div className="player-card">{warring ? `${winnings[0][0]} 🂠 ${left[0]}` : left[0]}</div>}
         <div className="card-count">Cards Remaining: {remaining1}</div>
       </div>
       <div id="player-two" className="player-half">
-        <div className="player-name"><h2>Player 2</h2></div>
-        {!right ? null : <div className="player-card">{war ? `${right[0]} 🂠 ${winnings[1][0]}` : right[0]}</div>}
+        <div className="player-name"><h2>Player 2 {showStats ? `has ${players[1].games_won} win${players[1].games_won === 1 ? "" : "s"}` : null}</h2></div>
+        {!right ? null : <div className="player-card">{warring ? `${right[0]} 🂠 ${winnings[1][0]}` : right[0]}</div>}
         <div className="card-count">Cards Remaining: {remaining2}</div>
       </div>
     </div>
