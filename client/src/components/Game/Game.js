@@ -15,18 +15,18 @@ function Game({ setStatus, status, winner, setWinner }) {
   const [players, setPlayers] = useState([])
   const [timer, setTimer] = useState()
 
-  const [deck, setDeck] = useState([
-    ["🂢",2],["🂣",3],["🂤",4],["🂥",5],["🂦",6],["🂧",7],["🂨",8],["🂩",9],["🂪",10],["🂫",11],["🂭",12],["🂮",13],["🂡",14],
-    ["🂲",2],["🂳",3],["🂴",4],["🂵",5],["🂶",6],["🂷",7],["🂸",8],["🂹",9],["🂺",10],["🂻",11],["🂽",12],["🂾",13],["🂱",14],
-    ["🃒",2],["🃓",3],["🃔",4],["🃕",5],["🃖",6],["🃗",7],["🃘",8],["🃙",9],["🃚",10],["🃛",11],["🃝",12],["🃞",13],["🃑",14],
-    ["🃂",2],["🃃",3],["🃄",4],["🃅",5],["🃆",6],["🃇",7],["🃈",8],["🃉",9],["🃊",10],["🃋",11],["🃍",12],["🃎",13],["🃁",14]
-  ]) 
   // const [deck, setDeck] = useState([
-  //   ["🂢",2],["🂣",3],["🂤",4],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],
-  //   ["🂲",2],["🂳",3],["🂴",4],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],
-  //   ["🃒",2],["🃓",3],["🃔",4],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],
-  //   ["🃂",2],["🃃",3],["🃄",4],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11]
+  //   ["🂢",2],["🂣",3],["🂤",4],["🂥",5],["🂦",6],["🂧",7],["🂨",8],["🂩",9],["🂪",10],["🂫",11],["🂭",12],["🂮",13],["🂡",14],
+  //   ["🂲",2],["🂳",3],["🂴",4],["🂵",5],["🂶",6],["🂷",7],["🂸",8],["🂹",9],["🂺",10],["🂻",11],["🂽",12],["🂾",13],["🂱",14],
+  //   ["🃒",2],["🃓",3],["🃔",4],["🃕",5],["🃖",6],["🃗",7],["🃘",8],["🃙",9],["🃚",10],["🃛",11],["🃝",12],["🃞",13],["🃑",14],
+  //   ["🃂",2],["🃃",3],["🃄",4],["🃅",5],["🃆",6],["🃇",7],["🃈",8],["🃉",9],["🃊",10],["🃋",11],["🃍",12],["🃎",13],["🃁",14]
   // ]) 
+  const [deck, setDeck] = useState([
+    ["🂢",2],["🂣",3],["🂤",4],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],
+    ["🂲",2],["🂳",3],["🂴",4],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],
+    ["🃒",2],["🃓",3],["🃔",4],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],
+    ["🃂",2],["🃃",3],["🃄",4],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11],["🂫",11]
+  ]) 
 
   useEffect(() => {
 
@@ -49,7 +49,7 @@ function Game({ setStatus, status, winner, setWinner }) {
     toPlay2 = (deck.slice(26))
     setLeft(null)
     setRight(null)
-    setStatus("Started")
+    setStatus("New Game")
     setHand1(toPlay1)
     setHand2(toPlay2)
     setWinner(null)
@@ -67,13 +67,6 @@ function Game({ setStatus, status, winner, setWinner }) {
     return arr
   }
 
-  function logHands() {
-    console.log(left)
-    console.log(right)
-    console.log(hand1)
-    console.log(hand2)
-  }
-
   function progressGame () {
     setTimer(setInterval(nextRound, 1000))
   }
@@ -84,8 +77,6 @@ function Game({ setStatus, status, winner, setWinner }) {
   }
 
   function nextRound() {
-
-    console.log(hand1, hand2)
 
     setRemaining1(hand1.length)
     setRemaining2(hand2.length)
@@ -100,7 +91,6 @@ function Game({ setStatus, status, winner, setWinner }) {
     pot = []
     setWar(false)
     let newStatus = "Started"
-    let roundOver = false
     let leftCard
     let rightCard
     toPlay1 = hand1
@@ -111,21 +101,21 @@ function Game({ setStatus, status, winner, setWinner }) {
     setWinnings(pot)
     
     if (leftCard[1] > rightCard[1]) {
-      roundOver = true
       toPlay1.push(...pot)
     } 
     else if (leftCard[1] < rightCard[1]) {
-      roundOver = true
       toPlay2.push(...pot)
     }
-    else if (left[1] === right[1]) {
+    else if (leftCard[1] === rightCard[1]) {
       setWar(true)
+      setLeft(leftCard)
+      setRight(rightCard)
+      declareWar(toPlay1, toPlay2, leftCard, rightCard, pot, newStatus)
       return
     }
     if (!toPlay1.length || !toPlay2.length) {
       newStatus = "Game Over"
     }
-
     //Setup Next Round
     setStatus(newStatus);
     setWinnings(pot)
@@ -134,12 +124,8 @@ function Game({ setStatus, status, winner, setWinner }) {
   }
 
   function declareWar (toPlay1, toPlay2, leftCard, rightCard, pot, newStatus) {
-
-    if(left[1] !== right[1]) {
-      setWar(false);
-      warring = false;
-      return
-    }
+    console.log("WARRING")
+    console.log(pot)
 
     setStatus(newStatus);
     setWinnings(pot)
@@ -153,54 +139,61 @@ function Game({ setStatus, status, winner, setWinner }) {
 
     if (warring) {
       if (hand1.length < 2) {
-      setGameOver(true)
-      setWinner(!hand1.length ? players[1] : players[0])
-      endGame(!hand1.length ? players[1] : players[0])
-      return
-    }
+        clearInterval(timer)
+        setGameOver(true)
+        setWinner(!hand1.length ? players[1] : players[0])
+        endGame(!hand1.length ? players[1] : players[0])
+        return
+      }
     else if (hand2.length < 2) {
+      clearInterval(timer)
       setGameOver(true)
       setWinner(!hand1.length ? players[1] : players[0])
       endGame(!hand1.length ? players[1] : players[0])
       return
     } else {
-      pot.push(toPlay1.shift(), toPlay2.shift())
-      setWinnings(pot)
-      leftCard = toPlay1.shift()
-      rightCard = toPlay2.shift()
-      setLeft(leftCard)
-      setRight(rightCard)
-      pot.push(leftCard, rightCard)
-      setWinnings(pot)
-      if (leftCard !== rightCard) {
-        warring = false
-        if (leftCard > rightCard) {
-          toPlay1.push(...pot)
-        } else {
-          toPlay2.push(...pot)
+        pot.push(toPlay1.shift(), toPlay2.shift())
+        leftCard = toPlay1.shift()
+        rightCard = toPlay2.shift()
+        pot.push(leftCard, rightCard)
+        setLeft(leftCard)
+        setRight(rightCard)
+        setWinnings(pot)
+        if (leftCard !== rightCard) {
+          warring = false
+          setWar(false)
+          if (leftCard > rightCard) {
+            toPlay1.push(...pot)
+            console.log(`player 1 won ${pot.length} cards: ${pot}`)
+          } else {
+            toPlay2.push(...pot)
+            console.log(`player 2 won ${pot.length} cards: ${pot}`)
+          }
         }
-      }
     }}
+    updateHands(toPlay1, toPlay2)
   }
 
   function endGame(winner) {
     setStatus("Game Over")
+    clearInterval(timer)
+    fetch('http://127.0.0.1:3000/players', {
+      method: 'PATCH',
+      body: JSON.stringify({
+        title: 'foo',
+      }),
+      headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
   }
 
-  // function endGame (winner) {
-  //   setGameOver(true)
-  //   fetch('http://127.0.0.1:3000/players', {
-  //     method: 'PATCH',
-  //     body: JSON.stringify({
-  //       title: 'foo',
-  //     }),
-  //     headers: {
-  //     'Content-type': 'application/json; charset=UTF-8',
-  //     },
-  //   })
-  // .then((response) => response.json())
-  // .then((json) => console.log(json));
-  // }
+  function endGame (winner) {
+    setGameOver(true)
+
+  }
 
   return (
     <>
@@ -215,15 +208,13 @@ function Game({ setStatus, status, winner, setWinner }) {
     <div id="game-holder">
       <div id="player-one" className="player-half">
         <div className="player-name"><h2>Player 1</h2></div>
-        <button onClick={war ? declareWar : nextRound}>Next Round</button>
-        {!left ? null : <div className="player-card">{!war ? left[0] : `${winnings[0][0]} 🂠 ${left[0]}`}</div>}
+        {!left ? null : <div className="player-card">{war ? `${winnings[0][0]} 🂠 ${left[0]}` : left[0]}</div>}
         <div className="card-count">Cards Remaining: {remaining1}</div>
       </div>
       <div id="player-two" className="player-half">
         <div className="player-name"><h2>Player 2</h2></div>
-        {!right ? null : <div className="player-card">{!war ? right[0] : `${winnings[1][0]} 🂠 ${right[0]}`}</div>}
+        {!right ? null : <div className="player-card">{war ? `${right[0]} 🂠 ${winnings[1][0]}` : right[0]}</div>}
         <div className="card-count">Cards Remaining: {remaining2}</div>
-        <button onClick={logHands}>Log Hands</button>
       </div>
     </div>
     </>

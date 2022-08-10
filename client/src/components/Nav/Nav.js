@@ -13,13 +13,16 @@ function Nav({ setStatus, status, winner, newGame, timer, setTimer, progressGame
     }
     else if (status === "Started") {
       setBanner("W A R")
+      setButton("Pause")
     }
     else if (status === "Paused") {
       setBanner("Game paused.")
+      setButton("Play")
     }
     else if (status === "Game Over" && winner) {
       setBanner (`${winner.name} wins! Press start to play again.`)
       setButton("Start")
+      clearInterval(timer)
     }
   }, [status, winner])
 
@@ -46,7 +49,7 @@ function Nav({ setStatus, status, winner, newGame, timer, setTimer, progressGame
     else if (status === "Game Over") {
       setStatus("Started")
       setBanner("W A R")
-      setButton("Start")
+      setButton("Pause")
       newGame()
       progressGame()
     }
