@@ -6,14 +6,8 @@ class PlayersController < ApplicationController
 
   def update 
     player = Player.find(params[:id])
-    player.update!(player_params)
+    player.update(games_won: params[:games_won])
     render json: player, status: 200
-  end
-
-  private 
-  
-  def player_params
-    params.permit(:win_count)
   end
 
 end
