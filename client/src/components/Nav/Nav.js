@@ -5,6 +5,7 @@ function Nav({ setStatus, status, winner, newGame, setTimer, timer, progressGame
 
   const [banner, setBanner] = useState("W A R")
   const [button, setButton] = useState("Pause")
+  const [speed, setSpeed] = useState("1x")
 
   useEffect (() => {
     if (status === "New Game") {
@@ -44,6 +45,7 @@ function Nav({ setStatus, status, winner, newGame, setTimer, timer, progressGame
       setStatus("Started")
       setBanner("W A R")
       setButton("Pause")
+      setSpeed("1x")
       progressGame()
     }
     else if (status === "Game Over") {
@@ -58,16 +60,19 @@ function Nav({ setStatus, status, winner, newGame, setTimer, timer, progressGame
   function setTimer1x() {
     clearInterval(timer)
     setTimer(setInterval(nextRound, 1000))
+    setSpeed("1x")
   }
 
   function setTimer2x() {
     clearInterval(timer)
-    setTimer(setInterval(nextRound, 600))
+    setTimer(setInterval(nextRound, 500))
+    setSpeed("2x")
   }
 
   function setTimer3x() {
     clearInterval(timer)
-    setTimer(setInterval(nextRound, 300))
+    setTimer(setInterval(nextRound, 200))
+    setSpeed("3x")
   }
 
   function openInNewTab (url) {
@@ -86,9 +91,9 @@ function Nav({ setStatus, status, winner, newGame, setTimer, timer, progressGame
         <h1>{banner}</h1>
       </div>
       <div className="nav-div" id="nav-div-3">
-        <button onClick={setTimer1x} title="set game speed to 1x" className="nav-button">1x</button>
-        <button onClick={setTimer2x} title="set game speed to 2x" className="nav-button">2x</button>
-        <button onClick={setTimer3x} title="set game speed to 3x" className="nav-button">3x</button>
+        <button onClick={setTimer1x} title="set game speed to 1x" className={speed === "1x" ? "active" : "nav-button"}>1x</button>
+        <button onClick={setTimer2x} title="set game speed to 2x" className={speed === "2x" ? "active" : "nav-button"}>2x</button>
+        <button onClick={setTimer3x} title="set game speed to 3x" className={speed === "3x" ? "active" : "nav-button"}>3x</button>
       </div>
     </div>
   )

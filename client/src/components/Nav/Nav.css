@@ -18,8 +18,26 @@
   width: 150%;
 }
 
-.nav-button {
+button {
   margin: 0 10px;
   width: 60px;
   height: 30px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: rgb(3, 69, 0);
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: rgb(17, 106, 13);
+  transform: scale(1.1);
+}
+
+button.active {
+  background-color: rgb(17, 106, 13);
+  transform: scale(1.1);
 }

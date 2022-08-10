@@ -9,14 +9,6 @@
   border: solid 10px rgb(255, 255, 255);
 }
 
-div#player-one.player-half {
-
-}
-
-div#player-two.player-half {
-
-}
-
 .player-half {
   display: flex;
   flex-direction: column;
