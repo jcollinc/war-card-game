@@ -13,6 +13,7 @@ function Game({ setStatus, status, winner, setWinner }) {
   const [gameOver, setGameOver] = useState(false)
   const [winnings, setWinnings] = useState([])
   const [players, setPlayers] = useState([])
+  const [timer, setTimer] = useState()
 
   const [deck, setDeck] = useState([
     ["🂢",2],["🂣",3],["🂤",4],["🂥",5],["🂦",6],["🂧",7],["🂨",8],["🂩",9],["🂪",10],["🂫",11],["🂭",12],["🂮",13],["🂡",14],
@@ -44,10 +45,10 @@ function Game({ setStatus, status, winner, setWinner }) {
 
   function newGame() {
     shuffle(deck)
-    toPlay1 = (deck.slice(0,2))
+    toPlay1 = (deck.slice(0,26))
     toPlay2 = (deck.slice(26))
-    setLeft(toPlay1.shift())
-    setRight(toPlay2.shift())
+    setLeft(null)
+    setRight(null)
     setStatus("Started")
     setHand1(toPlay1)
     setHand2(toPlay2)
@@ -73,6 +74,10 @@ function Game({ setStatus, status, winner, setWinner }) {
     console.log(hand2)
   }
 
+  function progressGame () {
+    setTimer(setInterval(nextRound, 1000))
+  }
+
   function updateHands (toPlay1, toPlay2) {
     setHand1(toPlay1)
     setHand2(toPlay2)
@@ -80,10 +85,13 @@ function Game({ setStatus, status, winner, setWinner }) {
 
   function nextRound() {
 
+    console.log(hand1, hand2)
+
     setRemaining1(hand1.length)
     setRemaining2(hand2.length)
 
     if ((hand1.length === 0 || hand2.length === 0)) {
+      clearInterval(timer)
       setGameOver(true)
       setWinner(!hand1.length ? players[1] : players[0])
       endGame(!hand1.length ? players[1] : players[0])
@@ -127,6 +135,12 @@ function Game({ setStatus, status, winner, setWinner }) {
 
   function declareWar (toPlay1, toPlay2, leftCard, rightCard, pot, newStatus) {
 
+    if(left[1] !== right[1]) {
+      setWar(false);
+      warring = false;
+      return
+    }
+
     setStatus(newStatus);
     setWinnings(pot)
     setLeft(leftCard)
@@ -138,27 +152,28 @@ function Game({ setStatus, status, winner, setWinner }) {
     setWar(true)
 
     if (warring) {
-      if (toPlay1.length < 2) {
-      newStatus = "Game Over"
-      setWinner(players[1])
-      warring = false
-      setWar(false)
+      if (hand1.length < 2) {
+      setGameOver(true)
+      setWinner(!hand1.length ? players[1] : players[0])
+      endGame(!hand1.length ? players[1] : players[0])
+      return
     }
-    else if (toPlay2.length < 2) {
-      newStatus = "Game Over"
-      setWinner(players[0])
-      warring = false
-      setWar(false)
+    else if (hand2.length < 2) {
+      setGameOver(true)
+      setWinner(!hand1.length ? players[1] : players[0])
+      endGame(!hand1.length ? players[1] : players[0])
+      return
     } else {
       pot.push(toPlay1.shift(), toPlay2.shift())
       setWinnings(pot)
       leftCard = toPlay1.shift()
       rightCard = toPlay2.shift()
+      setLeft(leftCard)
+      setRight(rightCard)
       pot.push(leftCard, rightCard)
       setWinnings(pot)
       if (leftCard !== rightCard) {
         warring = false
-        setWar(false)
         if (leftCard > rightCard) {
           toPlay1.push(...pot)
         } else {
@@ -194,6 +209,8 @@ function Game({ setStatus, status, winner, setWinner }) {
       winner={winner}
       status={status}
       newGame={newGame}
+      timer={timer}
+      progressGame = {progressGame}
     />
     <div id="game-holder">
       <div id="player-one" className="player-half">
