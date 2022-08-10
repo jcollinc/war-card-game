@@ -207,12 +207,12 @@ function Game({ setStatus, status, winner, setWinner }) {
     />
     <div id="game-holder">
       <div id="player-one" className="player-half">
-        <div className="player-name"><h2>Player 1 {showStats ? `has ${players[0].games_won} win${players[0].games_won === 1 ? "" : "s"}` : null}</h2></div>
+        <div className="player-name"><h2>Player 1 {showStats ? `: ${players[0].games_won} win${players[0].games_won === 1 ? "" : "s"}` : null}</h2></div>
         {!left ? null : <div className="player-card">{warring ? `${winnings[0][0]} 🂠 ${left[0]}` : left[0]}</div>}
         <div className="card-count">Cards Remaining: {remaining1}</div>
       </div>
       <div id="player-two" className="player-half">
-        <div className="player-name"><h2>Player 2 {showStats ? `has ${players[1].games_won} win${players[1].games_won === 1 ? "" : "s"}` : null}</h2></div>
+        <div className="player-name"><h2>Player 2 {showStats ? `: ${players[1].games_won} win${players[1].games_won === 1 ? "" : "s"}` : null}</h2></div>
         {!right ? null : <div className="player-card">{warring ? `${right[0]} 🂠 ${winnings[1][0]}` : right[0]}</div>}
         <div className="card-count">Cards Remaining: {remaining2}</div>
       </div>
