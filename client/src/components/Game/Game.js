@@ -3,57 +3,36 @@ import Nav from '../Nav/Nav'
 import './Game.css'
 
 function Game({ setStatus, status, winner, setWinner }) {
-  const [war, setWar] = useState(false)
-  const [hand1, setHand1] = useState([])
-  const [hand2, setHand2] = useState([])
-  const [left, setLeft] = useState([])
-  const [right, setRight] = useState([])
-  const [remaining1, setRemaining1] = useState()
-  const [remaining2, setRemaining2] = useState()
-  const [gameOver, setGameOver] = useState(false)
-  const [winnings, setWinnings] = useState([])
-  const [players, setPlayers] = useState([])
+
+  const [p1HandState, setP1HandState] = useState([])
+  const [p2HandState, setP2HandState] = useState([])
+  const [speed, setSpeed] = useState(1000)
   const [timer, setTimer] = useState()
-  const [showStats, setShowStats] = useState(false)
+  // const [deck, setDeck] = useState([
+  //   ["🂢",2],["🂣",3],["🂤",4],["🂥",5],["🂦",6],["🂧",7],["🂨",8],["🂩",9],["🂪",10],["🂫",11],["🂭",12],["🂮",13],["🂡",14],
+  //   ["🂲",2],["🂳",3],["🂴",4],["🂵",5],["🂶",6],["🂷",7],["🂸",8],["🂹",9],["🂺",10],["🂻",11],["🂽",12],["🂾",13],["🂱",14],
+  //   ["🃒",2],["🃓",3],["🃔",4],["🃕",5],["🃖",6],["🃗",7],["🃘",8],["🃙",9],["🃚",10],["🃛",11],["🃝",12],["🃞",13],["🃑",14],
+  //   ["🃂",2],["🃃",3],["🃄",4],["🃅",5],["🃆",6],["🃇",7],["🃈",8],["🃉",9],["🃊",10],["🃋",11],["🃍",12],["🃎",13],["🃁",14]
+  // ]) 
 
   const [deck, setDeck] = useState([
-    ["🂢",2],["🂣",3],["🂤",4],["🂥",5],["🂦",6],["🂧",7],["🂨",8],["🂩",9],["🂪",10],["🂫",11],["🂭",12],["🂮",13],["🂡",14],
-    ["🂲",2],["🂳",3],["🂴",4],["🂵",5],["🂶",6],["🂷",7],["🂸",8],["🂹",9],["🂺",10],["🂻",11],["🂽",12],["🂾",13],["🂱",14],
-    ["🃒",2],["🃓",3],["🃔",4],["🃕",5],["🃖",6],["🃗",7],["🃘",8],["🃙",9],["🃚",10],["🃛",11],["🃝",12],["🃞",13],["🃑",14],
-    ["🃂",2],["🃃",3],["🃄",4],["🃅",5],["🃆",6],["🃇",7],["🃈",8],["🃉",9],["🃊",10],["🃋",11],["🃍",12],["🃎",13],["🃁",14]
+    [["🂢"],2],[["🂣"],3],[["🂤"],4],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],
+    [["🂲"],2],[["🂳"],3],[["🂴"],4],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],
+    [["🃒"],2],[["🃓"],3],[["🃔"],4],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],
+    [["🃂"],2],[["🃃"],3],[["🃄"],4],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11],[["🂫"],11]
   ]) 
 
   useEffect(() => {
     newGame()
   }, [])  
   
-  let toPlay1 = []
-  let toPlay2 = []
-  let pot = []   
-  let warring = false
+  let p1Hand = []
+  let p2Hand = []
+  let p1Played = []
+  let p2Played = []
+  let winnings = []   
+  let war = false
 
-  function newGame() {
-    
-    fetch("/players")
-    .then(r => r.json())
-    .then(allPlayers => {
-      setPlayers(allPlayers)
-    })
-    shuffle(deck)
-    toPlay1 = (deck.slice(0,26))
-    toPlay2 = (deck.slice(26))
-    setLeft(null)
-    setRight(null)
-    setStatus("New Game")
-    setHand1(toPlay1)
-    setHand2(toPlay2)
-    setWinner(null)
-    setWar(false)
-    setWinnings(false)
-    setRemaining1(toPlay1.length)
-    setRemaining2(toPlay2.length)
-  }
-  
   function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -62,37 +41,41 @@ function Game({ setStatus, status, winner, setWinner }) {
     return arr
   }
 
-  function progressGame () {
-    setTimer(setInterval(nextRound, 1000))
+  function newGame() {
+    fetch("/players")
+    .then(r => r.json())
+    .then(allPlayers => {
+      setPlayers(allPlayers)
+    })
+    shuffle(deck)
+    p1Hand = (deck.slice(0,26))
+    p2Hand = (deck.slice(26))
+    setP1HandState(p1Hand)
+    setP2HandState(p2Hand)
   }
 
-  function updateHands (toPlay1, toPlay2) {
-    setHand1(toPlay1)
-    setHand2(toPlay2)
+  function updateHands(p1Hand, p2Hand) {
+    setP1HandState(p1Hand)
+    setP2HandState(p2Hand)
+  }
+  
+  function progressGame () {
+    setTimer(setInterval(nextRound, speed))
   }
 
   function nextRound() {
 
-    setRemaining1(hand1.length)
-    setRemaining2(hand2.length)
-
-    if ((hand1.length === 0 || hand2.length === 0)) {
+    if ((p1HandState.length === 0 || p2HandState.length === 0)) {
       clearInterval(timer)
-      setGameOver(true)
-      setWinner(!hand1.length ? players[1] : players[0])
-      endGame(!hand1.length ? players[1] : players[0])
+      setWinner(!p1HandState.length ? players[1] : players[0])
+      endGame(!p1HandState.length ? players[1] : players[0])
       return
     }
-    pot = []
-    setWar(false)
-    let newStatus = "Started"
-    let leftCard
-    let rightCard
-    toPlay1 = hand1
-    toPlay2 = hand2
-    leftCard = toPlay1.shift()
-    rightCard = toPlay2.shift()
-    pot.push(leftCard, rightCard)
+    p1Hand = p1HandState
+    p2Hand = p2HandState
+    leftCard = p1Hand.shift()
+    rightCard = p2Hand.shift()
+    winnings.push(leftCard, rightCard)
     setWinnings(pot)
     
     if (leftCard[1] > rightCard[1]) {
@@ -103,8 +86,8 @@ function Game({ setStatus, status, winner, setWinner }) {
     }
     else if (leftCard[1] === rightCard[1]) {
       setWar(true)
-      setLeft(leftCard)
-      setRight(rightCard)
+      setLeft([...leftCard[0], "🂠"])
+      setRight([...rightCard[0], "🂠"])
       declareWar(toPlay1, toPlay2, leftCard, rightCard, pot, newStatus)
       return
     }
@@ -114,18 +97,16 @@ function Game({ setStatus, status, winner, setWinner }) {
     //Setup Next Round
     setStatus(newStatus);
     setWinnings(pot)
-    setLeft(leftCard)
-    setRight(rightCard)
+    setLeft([...leftCard[0], "🂠"])
+    setRight([...rightCard[0], "🂠"])
   }
 
   function declareWar (toPlay1, toPlay2, leftCard, rightCard, pot, newStatus) {
-    console.log("WARRING")
-    console.log(pot)
 
     setStatus(newStatus);
     setWinnings(pot)
-    setLeft(leftCard)
-    setRight(rightCard)
+    setLeft([...leftCard[0], "🂠"])
+    setRight([...rightCard[0], "🂠"])
     setHand1(toPlay1)
     setHand2(toPlay2)
     
@@ -151,8 +132,8 @@ function Game({ setStatus, status, winner, setWinner }) {
         leftCard = toPlay1.shift()
         rightCard = toPlay2.shift()
         pot.push(leftCard, rightCard)
-        setLeft(leftCard)
-        setRight(rightCard)
+        setLeft([...leftCard[0], "🂠"])
+        setRight(rightCard[0])
         setWinnings(pot)
         if (leftCard !== rightCard) {
           warring = false
@@ -188,6 +169,8 @@ function Game({ setStatus, status, winner, setWinner }) {
   return (
     <>
     <Nav 
+      speed={speed}
+      setSpeed={setSpeed}
       setStatus={setStatus}
       winner={winner}
       status={status}
@@ -202,12 +185,12 @@ function Game({ setStatus, status, winner, setWinner }) {
     <div id="game-holder">
       <div id="player-one" className="player-half">
         <div className="player-name"><h2>Player 1 {showStats ? `: ${players[0].games_won} win${players[0].games_won === 1 ? "" : "s"}` : null}</h2></div>
-        {!left ? null : <div className="player-card">{warring ? `${winnings[0][0]} 🂠 ${left[0]}` : left[0]}</div>}
+        {!left ? null : <div className="player-card">{left[0]}</div>}
         <div className="card-count">Cards Remaining: {remaining1}</div>
       </div>
       <div id="player-two" className="player-half">
         <div className="player-name"><h2>Player 2 {showStats ? `: ${players[1].games_won} win${players[1].games_won === 1 ? "" : "s"}` : null}</h2></div>
-        {!right ? null : <div className="player-card">{warring ? `${right[0]} 🂠 ${winnings[1][0]}` : right[0]}</div>}
+        {!right ? null : <div className="player-card">{right[0]}</div>}
         <div className="card-count">Cards Remaining: {remaining2}</div>
       </div>
     </div>

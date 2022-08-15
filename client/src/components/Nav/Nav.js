@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './Nav.css'
 
-function Nav({ setStatus, status, winner, newGame, setTimer, timer, progressGame, showStats, setShowStats, nextRound}) {
+function Nav({ speed, setSpeed, setStatus, status, winner, newGame, setTimer, timer, progressGame, showStats, setShowStats, nextRound}) {
 
   const [banner, setBanner] = useState("W A R")
   const [button, setButton] = useState("Pause")
-  const [speed, setSpeed] = useState("1x")
 
   useEffect (() => {
     if (status === "New Game") {
@@ -60,19 +59,19 @@ function Nav({ setStatus, status, winner, newGame, setTimer, timer, progressGame
   function setTimer1x() {
     clearInterval(timer)
     setTimer(setInterval(nextRound, 1000))
-    setSpeed("1x")
+    setSpeed(1000)
   }
 
   function setTimer2x() {
     clearInterval(timer)
     setTimer(setInterval(nextRound, 500))
-    setSpeed("2x")
+    setSpeed(500)
   }
 
   function setTimer3x() {
     clearInterval(timer)
     setTimer(setInterval(nextRound, 200))
-    setSpeed("3x")
+    setSpeed(200)
   }
 
   function openInNewTab (url) {
@@ -91,9 +90,9 @@ function Nav({ setStatus, status, winner, newGame, setTimer, timer, progressGame
         <h1>{banner}</h1>
       </div>
       <div className="nav-div" id="nav-div-3">
-        <button onClick={setTimer1x} title="set game speed to 1x" className={speed === "1x" ? "active" : "nav-button"}>1x</button>
-        <button onClick={setTimer2x} title="set game speed to 2x" className={speed === "2x" ? "active" : "nav-button"}>2x</button>
-        <button onClick={setTimer3x} title="set game speed to 3x" className={speed === "3x" ? "active" : "nav-button"}>3x</button>
+        <button onClick={setTimer1x} title="set game speed to 1x" className={speed === 1000 ? "active" : "nav-button"}>1x</button>
+        <button onClick={setTimer2x} title="set game speed to 2x" className={speed === 500 ? "active" : "nav-button"}>2x</button>
+        <button onClick={setTimer3x} title="set game speed to 3x" className={speed === 200 ? "active" : "nav-button"}>3x</button>
       </div>
     </div>
   )
